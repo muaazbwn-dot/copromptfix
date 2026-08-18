@@ -16,10 +16,10 @@ export const Route = createFileRoute("/")({
         content:
           "Browse a curated gallery of AI-generated images and copy the exact prompt behind each one. Free prompt library, no login required.",
       },
-      { property: "og:title", content: "Promptify — Discover, Copy, Create" },
+      { property: "og:title", content: "Promptify — Discover, Copy, Create AI Image Prompts" },
       {
         property: "og:description",
-        content: "A free, beautiful library of AI image prompts you can copy in one tap.",
+        content: "Browse a curated gallery of AI-generated images and copy the exact prompt behind each one. Free prompt library, no login required.",
       },
       { property: "og:url", content: "/" },
       { property: "og:type", content: "website" },

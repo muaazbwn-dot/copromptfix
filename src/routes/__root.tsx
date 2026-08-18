@@ -81,15 +81,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Promptify — Discover AI Image Prompts" },
+      { title: "Promptify — Discover, Copy, Create AI Image Prompts" },
       {
         name: "description",
         content:
-          "Browse beautiful AI-generated images and copy the exact prompt behind each one. Free, no account needed.",
+          "Browse a curated gallery of AI-generated images and copy the exact prompt behind each one. Free prompt library, no login required.",
       },
       { property: "og:site_name", content: "Promptify" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Promptify — Discover, Copy, Create AI Image Prompts" },
+      { name: "twitter:title", content: "Promptify — Discover, Copy, Create AI Image Prompts" },
+      { property: "og:description", content: "Browse a curated gallery of AI-generated images and copy the exact prompt behind each one. Free prompt library, no login required." },
+      { name: "twitter:description", content: "Browse a curated gallery of AI-generated images and copy the exact prompt behind each one. Free prompt library, no login required." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a34fad4fab5eeed78cf6d6f4f7762b30/id-preview-e963510b--c4c3dd01-ea9c-45b4-b082-c501bf8f4e5b.lovable.app-1787022124105.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a34fad4fab5eeed78cf6d6f4f7762b30/id-preview-e963510b--c4c3dd01-ea9c-45b4-b082-c501bf8f4e5b.lovable.app-1787022124105.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
