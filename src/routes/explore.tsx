@@ -7,14 +7,20 @@ import { AdSlot } from "@/components/site/AdSlot";
 import { PromptGrid } from "@/components/site/PromptCard";
 import { CATEGORIES, categoryFromSlug, categorySlug, listPrompts } from "@/lib/promptify";
 
-type ExploreSearch = { q?: string; category?: string; sort?: "latest" | "trending" };
+type ExploreSearch = {
+  q?: string | undefined;
+  category?: string | undefined;
+  sort?: "latest" | "trending" | undefined;
+};
 
 export const Route = createFileRoute("/explore")({
   validateSearch: (search: Record<string, unknown>): ExploreSearch => ({
-    q: typeof search.q === "string" && search.q ? search.q : undefined,
+    q: typeof search["q"] === "string" && search["q"] ? (search["q"] as string) : undefined,
     category:
-      typeof search.category === "string" && search.category ? search.category : undefined,
-    sort: search.sort === "trending" ? "trending" : undefined,
+      typeof search["category"] === "string" && search["category"]
+        ? (search["category"] as string)
+        : undefined,
+    sort: search["sort"] === "trending" ? "trending" : undefined,
   }),
   head: () => ({
     meta: [
@@ -46,7 +52,7 @@ function Explore() {
   const { data: prompts = [], isLoading } = useQuery({
     queryKey: ["explore", search.q ?? "", category ?? "", search.sort ?? "latest"],
     queryFn: () =>
-      listPrompts({ search: search.q, category, sort: search.sort ?? "latest", limit: 90 }),
+      listPrompts({ search: search.q ?? "", category: category ?? "", sort: search.sort ?? "latest", limit: 90 }),
   });
 
   return (

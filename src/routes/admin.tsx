@@ -66,7 +66,7 @@ function Admin() {
     },
   });
 
-  async function update(id: string, patch: Record<string, unknown>) {
+  async function update(id: string, patch: { status?: string; featured?: boolean }) {
     const { error } = await supabase.from("prompts").update(patch).eq("id", id);
     if (error) {
       toast.error(error.message);

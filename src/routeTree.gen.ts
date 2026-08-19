@@ -10,12 +10,36 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CategoriesRouteImport } from './routes/categories'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as UploadRouteImport } from './routes/upload'
+import { Route as PromptSlugRouteImport } from './routes/prompt.$slug'
+import { Route as ApiPublicImageSplatRouteImport } from './routes/api/public/image/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoriesRoute = CategoriesRouteImport.update({
@@ -23,40 +47,143 @@ const CategoriesRoute = CategoriesRouteImport.update({
   path: '/categories',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExploreRoute = ExploreRouteImport.update({
   id: '/explore',
   path: '/explore',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UploadRoute = UploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PromptSlugRoute = PromptSlugRouteImport.update({
+  id: '/prompt/$slug',
+  path: '/prompt/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicImageSplatRoute = ApiPublicImageSplatRouteImport.update({
+  id: '/api/public/image/$',
+  path: '/api/public/image/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
   '/explore': typeof ExploreRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
+  '/upload': typeof UploadRoute
+  '/prompt/$slug': typeof PromptSlugRoute
+  '/api/public/image/$': typeof ApiPublicImageSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
   '/explore': typeof ExploreRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
+  '/upload': typeof UploadRoute
+  '/prompt/$slug': typeof PromptSlugRoute
+  '/api/public/image/$': typeof ApiPublicImageSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
   '/explore': typeof ExploreRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
+  '/upload': typeof UploadRoute
+  '/prompt/$slug': typeof PromptSlugRoute
+  '/api/public/image/$': typeof ApiPublicImageSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/categories' | '/explore'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/auth'
+    | '/categories'
+    | '/contact'
+    | '/explore'
+    | '/privacy'
+    | '/terms'
+    | '/upload'
+    | '/prompt/$slug'
+    | '/api/public/image/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/categories' | '/explore'
-  id: '__root__' | '/' | '/categories' | '/explore'
+  to:
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/auth'
+    | '/categories'
+    | '/contact'
+    | '/explore'
+    | '/privacy'
+    | '/terms'
+    | '/upload'
+    | '/prompt/$slug'
+    | '/api/public/image/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/auth'
+    | '/categories'
+    | '/contact'
+    | '/explore'
+    | '/privacy'
+    | '/terms'
+    | '/upload'
+    | '/prompt/$slug'
+    | '/api/public/image/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
+  AuthRoute: typeof AuthRoute
   CategoriesRoute: typeof CategoriesRoute
+  ContactRoute: typeof ContactRoute
   ExploreRoute: typeof ExploreRoute
+  PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
+  UploadRoute: typeof UploadRoute
+  PromptSlugRoute: typeof PromptSlugRoute
+  ApiPublicImageSplatRoute: typeof ApiPublicImageSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,11 +195,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/categories': {
       id: '/categories'
       path: '/categories'
       fullPath: '/categories'
       preLoaderRoute: typeof CategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/explore': {
@@ -82,13 +237,57 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExploreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/upload': {
+      id: '/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof UploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prompt/$slug': {
+      id: '/prompt/$slug'
+      path: '/prompt/$slug'
+      fullPath: '/prompt/$slug'
+      preLoaderRoute: typeof PromptSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/image/$': {
+      id: '/api/public/image/$'
+      path: '/api/public/image/$'
+      fullPath: '/api/public/image/$'
+      preLoaderRoute: typeof ApiPublicImageSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
+  AuthRoute: AuthRoute,
   CategoriesRoute: CategoriesRoute,
+  ContactRoute: ContactRoute,
   ExploreRoute: ExploreRoute,
+  PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
+  UploadRoute: UploadRoute,
+  PromptSlugRoute: PromptSlugRoute,
+  ApiPublicImageSplatRoute: ApiPublicImageSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
