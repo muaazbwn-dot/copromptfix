@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Copy, Eye, Tag } from "lucide-react";
 import { useEffect } from "react";
 
-import { AdSlot } from "@/components/site/AdSlot";
+import { PromptViewAd } from "@/components/site/PromptViewAd";
 import { CopyPromptButton } from "@/components/site/CopyPromptButton";
 import { PromptGrid } from "@/components/site/PromptCard";
 import {
@@ -156,7 +156,7 @@ function PromptDetail() {
             </div>
           ) : null}
 
-          <AdSlot className="mt-8" />
+          <PromptViewAd slug={data.slug} className="mt-8" />
         </div>
       </div>
 
