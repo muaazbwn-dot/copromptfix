@@ -59,10 +59,10 @@ const SELECT =
   "id,slug,title,prompt_text,image_url,category,tags,creator,views,copies,status,featured,created_at";
 
 export type ListOptions = {
-  search?: string;
-  category?: string;
-  sort?: "latest" | "trending" | "featured";
-  limit?: number;
+  search?: string | undefined;
+  category?: string | undefined;
+  sort?: "latest" | "trending" | "featured" | undefined;
+  limit?: number | undefined;
 };
 
 export async function listPrompts(options: ListOptions = {}): Promise<Prompt[]> {
@@ -121,9 +121,9 @@ export type SubmissionInput = {
   prompt_text: string;
   category: string;
   tags: string[];
-  creator?: string;
-  imageFile?: File | null;
-  imageUrl?: string;
+  creator?: string | undefined;
+  imageFile?: File | null | undefined;
+  imageUrl?: string | undefined;
 };
 
 export async function submitPrompt(input: SubmissionInput) {
