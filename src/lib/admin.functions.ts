@@ -35,10 +35,11 @@ export const updateSubmission = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const patch: Record<string, unknown> = {};
-    if (data.status !== undefined) patch['status'] = data.status;
-    if (data.featured !== undefined) patch['featured'] = data.featured;
+    const patch: { status?: string; featured?: boolean } = {};
+    if (data.status !== undefined) patch.status = data.status;
+    if (data.featured !== undefined) patch.featured = data.featured;
     const { error } = await supabaseAdmin.from("prompts").update(patch).eq("id", data.id);
+
     if (error) throw new Error(error.message);
     return { ok: true };
   });
