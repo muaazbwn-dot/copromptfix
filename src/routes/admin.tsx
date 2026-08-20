@@ -1,9 +1,11 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
+import { deleteSubmission, listSubmissions, updateSubmission } from "@/lib/admin.functions";
 import type { Prompt, PromptStatus } from "@/lib/promptify";
 
 export const Route = createFileRoute("/admin")({
@@ -24,15 +26,16 @@ export const Route = createFileRoute("/admin")({
   component: Admin,
 });
 
-const SELECT =
-  "id,slug,title,prompt_text,image_url,category,tags,creator,views,copies,status,featured,created_at";
-
 function Admin() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [ready, setReady] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [filter, setFilter] = useState<PromptStatus>("pending");
+
+  const fetchSubmissions = useServerFn(listSubmissions);
+  const runUpdate = useServerFn(updateSubmission);
+  const runDelete = useServerFn(deleteSubmission);
 
   useEffect(() => {
     let active = true;
@@ -52,39 +55,36 @@ function Admin() {
     };
   }, [navigate]);
 
-  const { data: prompts = [], isLoading } = useQuery({
+  const {
+    data: prompts = [],
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["admin-prompts", filter],
     enabled: isAdmin,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("prompts")
-        .select(SELECT)
-        .eq("status", filter)
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return (data ?? []) as Prompt[];
-    },
+    queryFn: async () => (await fetchSubmissions({ data: { status: filter } })) as Prompt[],
   });
 
   async function update(id: string, patch: { status?: string; featured?: boolean }) {
-    const { error } = await supabase.from("prompts").update(patch).eq("id", id);
-    if (error) {
-      toast.error(error.message);
-      return;
+    try {
+      await runUpdate({ data: { id, ...patch } });
+      toast.success("Updated");
+      void queryClient.invalidateQueries({ queryKey: ["admin-prompts"] });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Update failed");
     }
-    toast.success("Updated");
-    void queryClient.invalidateQueries({ queryKey: ["admin-prompts"] });
   }
 
   async function remove(id: string) {
-    const { error } = await supabase.from("prompts").delete().eq("id", id);
-    if (error) {
-      toast.error(error.message);
-      return;
+    try {
+      await runDelete({ data: { id } });
+      toast.success("Deleted");
+      void queryClient.invalidateQueries({ queryKey: ["admin-prompts"] });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Delete failed");
     }
-    toast.success("Deleted");
-    void queryClient.invalidateQueries({ queryKey: ["admin-prompts"] });
   }
+
 
   if (!ready) {
     return <p className="px-6 py-24 text-center text-sm text-muted-foreground">Checking access…</p>;
