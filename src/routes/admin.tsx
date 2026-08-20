@@ -144,12 +144,17 @@ function Admin() {
         ))}
       </div>
 
-      {isLoading ? (
+      {error ? (
+        <p className="mt-10 rounded-2xl border border-destructive/50 p-6 text-sm text-destructive">
+          Couldn't load submissions: {error instanceof Error ? error.message : "unknown error"}
+        </p>
+      ) : isLoading ? (
         <p className="mt-10 text-sm text-muted-foreground">Loading…</p>
       ) : prompts.length === 0 ? (
         <p className="mt-10 rounded-2xl border border-dashed border-border p-10 text-center text-sm text-muted-foreground">
           Nothing {filter} right now.
         </p>
+
       ) : (
         <div className="mt-8 grid gap-4">
           {prompts.map((prompt) => (
