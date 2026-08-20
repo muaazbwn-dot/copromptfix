@@ -65,7 +65,7 @@ function Upload() {
         imageUrl,
       });
       setDone(true);
-      toast.success("Submitted for review!");
+      toast.success("Your prompt has been submitted and is waiting for approval.");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Submission failed.");
     } finally {
@@ -78,7 +78,7 @@ function Upload() {
       <div className="mx-auto max-w-2xl px-4 py-24 text-center sm:px-6">
         <h1 className="font-display text-3xl font-semibold">Thanks for sharing!</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Your prompt is pending review. Once approved it will appear in the gallery.
+          Your prompt has been submitted and is waiting for approval. Once approved it will appear in the gallery.
         </p>
         <button
           type="button"
