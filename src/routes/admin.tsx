@@ -171,9 +171,12 @@ function Admin() {
               <div>
                 <h2 className="text-sm font-semibold">{prompt.title}</h2>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {prompt.category} · {prompt.tags.join(", ") || "no tags"} ·{" "}
-                  {prompt.creator ?? "anonymous"}
+                  Submitted {new Date(prompt.created_at).toLocaleString()}
                 </p>
+                <p className="mt-3 line-clamp-4 text-xs leading-relaxed text-muted-foreground">
+                  {prompt.prompt_text}
+                </p>
+
                 <p className="mt-3 line-clamp-4 text-xs leading-relaxed text-muted-foreground">
                   {prompt.prompt_text}
                 </p>
