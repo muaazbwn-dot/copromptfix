@@ -116,50 +116,6 @@ export async function trackMetric(slug: string, metric: "views" | "copies") {
   await supabase.rpc("increment_prompt_metric", { _slug: slug, _metric: metric });
 }
 
-export type SubmissionInput = {
-  title: string;
-  prompt_text: string;
-  category: string;
-  tags: string[];
-  creator?: string | undefined;
-  imageFile?: File | null | undefined;
-  imageUrl?: string | undefined;
-};
-
-export async function submitPrompt(input: SubmissionInput) {
-  let imageUrl = input.imageUrl?.trim() ?? "";
-
-  if (input.imageFile) {
-    const ext = input.imageFile.name.split(".").pop()?.toLowerCase() ?? "jpg";
-    const path = `${crypto.randomUUID()}.${ext}`;
-    const { error: uploadError } = await supabase.storage
-      .from("prompt-images")
-      .upload(path, input.imageFile, { cacheControl: "31536000", upsert: false });
-    if (uploadError) throw uploadError;
-    imageUrl = `/api/public/image/${path}`;
-  }
-
-  if (!imageUrl) throw new Error("An image file or image URL is required.");
-
-  const slug = `${slugify(input.title) || "prompt"}-${Math.random().toString(36).slice(2, 7)}`;
-
-  const { error } = await supabase.from("prompts").insert({
-    slug,
-    title: input.title.trim(),
-    prompt_text: input.prompt_text.trim(),
-    image_url: imageUrl,
-    category: input.category,
-    tags: input.tags,
-    creator: input.creator?.trim() || null,
-    status: "pending",
-    featured: false,
-    views: 0,
-    copies: 0,
-  });
-  if (error) throw error;
-  return slug;
-}
-
 export function formatCount(value: number) {
   if (value >= 1000) return `${(value / 1000).toFixed(1).replace(/\.0$/, "")}k`;
   return String(value);
