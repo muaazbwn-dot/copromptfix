@@ -235,12 +235,31 @@ function Upload() {
           />
         </label>
 
+
+        <div className="mt-2 grid gap-2 rounded-2xl surface-card p-5">
+          <span className="text-sm font-medium">Owner Verification</span>
+          <label className="grid gap-2 text-sm">
+            <span className="text-xs text-muted-foreground">
+              Enter Owner PIN to publish this prompt
+            </span>
+            <input
+              type="password"
+              value={pin}
+              onChange={(event) => setPin(event.target.value)}
+              className={inputClass}
+              autoComplete="off"
+              placeholder="••••"
+            />
+          </label>
+        </div>
+
         <button
           type="submit"
           disabled={pending}
           className="mt-2 inline-flex h-12 items-center justify-center rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground disabled:opacity-60"
         >
-          {pending ? "Submitting…" : "Submit prompt"}
+          {pending ? "Publishing…" : "Publish prompt"}
+
         </button>
       </form>
     </div>
