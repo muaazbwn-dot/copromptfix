@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/upload")({
       {
         name: "description",
         content:
-          "Share your best AI image prompt with the Promptify community. Submissions are reviewed before publishing.",
+          "Publish an AI image prompt to the Promptify gallery with the Owner PIN.",
       },
       { property: "og:title", content: "Upload an AI Image Prompt — Promptify" },
       {
@@ -151,8 +151,7 @@ function Upload() {
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
       <h1 className="font-display text-3xl font-semibold">Upload a prompt</h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        Share the image and the exact prompt behind it. Every submission is reviewed by a
-        moderator before it goes live.
+        Share the image and the exact prompt behind it. Publishing requires the Owner PIN.
       </p>
 
       <form onSubmit={onSubmit} className="mt-8 grid gap-5">
