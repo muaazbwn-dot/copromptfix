@@ -1,8 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { CATEGORIES, submitPrompt } from "@/lib/promptify";
+import { CATEGORIES } from "@/lib/promptify";
+import { publishPrompt } from "@/lib/publish.functions";
+
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = String(reader.result);
+      resolve(result.slice(result.indexOf(",") + 1));
+    };
+    reader.onerror = () => reject(new Error("Could not read the image file."));
+    reader.readAsDataURL(file);
+  });
+}
+
 
 export const Route = createFileRoute("/upload")({
   head: () => ({
@@ -11,7 +26,7 @@ export const Route = createFileRoute("/upload")({
       {
         name: "description",
         content:
-          "Share your best AI image prompt with the Promptify community. Submissions are reviewed before publishing.",
+          "Publish an AI image prompt to the Promptify gallery with the Owner PIN.",
       },
       { property: "og:title", content: "Upload an AI Image Prompt — Promptify" },
       {
@@ -31,13 +46,17 @@ const inputClass =
 function Upload() {
   const [pending, setPending] = useState(false);
   const [done, setDone] = useState(false);
+  const [publishedSlug, setPublishedSlug] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [promptText, setPromptText] = useState("");
   const [category, setCategory] = useState<string>(CATEGORIES[0]);
   const [tags, setTags] = useState("");
   const [creator, setCreator] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [pin, setPin] = useState("");
   const [file, setFile] = useState<File | null>(null);
+
+  const runPublish = useServerFn(publishPrompt);
 
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -49,25 +68,42 @@ function Upload() {
       toast.error("Add an image file or an image URL.");
       return;
     }
+    if (!pin.trim()) {
+      toast.error("Enter the Owner PIN to publish this prompt.");
+      return;
+    }
     setPending(true);
     try {
-      await submitPrompt({
-        title,
-        prompt_text: promptText,
-        category,
-        tags: tags
-          .split(",")
-          .map((tag) => tag.trim().toLowerCase())
-          .filter(Boolean)
-          .slice(0, 10),
-        creator,
-        imageFile: file,
-        imageUrl,
+      const result = await runPublish({
+        data: {
+          pin,
+          title,
+          prompt_text: promptText,
+          category,
+          tags: tags
+            .split(",")
+            .map((tag) => tag.trim().toLowerCase())
+            .filter(Boolean)
+            .slice(0, 10),
+          creator,
+          imageUrl: imageUrl.trim() || undefined,
+          imageBase64: file ? await fileToBase64(file) : undefined,
+          imageName: file?.name,
+          imageType: file?.type,
+        },
       });
+
+      if (!result.ok) {
+        toast.error(result.error);
+        return;
+      }
+
+      setPublishedSlug(result.slug);
+      setPin("");
       setDone(true);
-      toast.success("Your prompt has been submitted and is waiting for approval.");
+      toast.success("Prompt published successfully!");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Submission failed.");
+      toast.error(error instanceof Error ? error.message : "Publishing failed.");
     } finally {
       setPending(false);
     }
@@ -76,34 +112,46 @@ function Upload() {
   if (done) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-24 text-center sm:px-6">
-        <h1 className="font-display text-3xl font-semibold">Thanks for sharing!</h1>
+        <h1 className="font-display text-3xl font-semibold">Prompt published successfully!</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Your prompt has been submitted and is waiting for approval. Once approved it will appear in the gallery.
+          Your prompt is now live in the Promptify gallery.
         </p>
-        <button
-          type="button"
-          onClick={() => {
-            setDone(false);
-            setTitle("");
-            setPromptText("");
-            setTags("");
-            setImageUrl("");
-            setFile(null);
-          }}
-          className="mt-6 inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
-        >
-          Submit another
-        </button>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {publishedSlug ? (
+            <Link
+              to="/prompt/$slug"
+              params={{ slug: publishedSlug }}
+              className="inline-flex rounded-full border border-border px-5 py-2.5 text-sm font-medium"
+            >
+              View prompt
+            </Link>
+          ) : null}
+          <button
+            type="button"
+            onClick={() => {
+              setDone(false);
+              setPublishedSlug(null);
+              setTitle("");
+              setPromptText("");
+              setTags("");
+              setImageUrl("");
+              setFile(null);
+            }}
+            className="inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
+          >
+            Publish another
+          </button>
+        </div>
       </div>
     );
   }
+
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
       <h1 className="font-display text-3xl font-semibold">Upload a prompt</h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        Share the image and the exact prompt behind it. Every submission is reviewed by a
-        moderator before it goes live.
+        Share the image and the exact prompt behind it. Publishing requires the Owner PIN.
       </p>
 
       <form onSubmit={onSubmit} className="mt-8 grid gap-5">
@@ -186,12 +234,31 @@ function Upload() {
           />
         </label>
 
+
+        <div className="mt-2 grid gap-2 rounded-2xl surface-card p-5">
+          <span className="text-sm font-medium">Owner Verification</span>
+          <label className="grid gap-2 text-sm">
+            <span className="text-xs text-muted-foreground">
+              Enter Owner PIN to publish this prompt
+            </span>
+            <input
+              type="password"
+              value={pin}
+              onChange={(event) => setPin(event.target.value)}
+              className={inputClass}
+              autoComplete="off"
+              placeholder="••••"
+            />
+          </label>
+        </div>
+
         <button
           type="submit"
           disabled={pending}
           className="mt-2 inline-flex h-12 items-center justify-center rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground disabled:opacity-60"
         >
-          {pending ? "Submitting…" : "Submit prompt"}
+          {pending ? "Publishing…" : "Publish prompt"}
+
         </button>
       </form>
     </div>
