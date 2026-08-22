@@ -63,10 +63,11 @@ export type ListOptions = {
   category?: string | undefined;
   sort?: "latest" | "trending" | "featured" | undefined;
   limit?: number | undefined;
+  offset?: number | undefined;
 };
 
 export async function listPrompts(options: ListOptions = {}): Promise<Prompt[]> {
-  const { search, category, sort = "latest", limit = 60 } = options;
+  const { search, category, sort = "latest", limit = 60, offset = 0 } = options;
   let query = supabase.from("prompts").select(SELECT).eq("status", "approved");
 
   if (category) query = query.eq("category", category);
@@ -84,10 +85,11 @@ export async function listPrompts(options: ListOptions = {}): Promise<Prompt[]> 
       ? query.order("copies", { ascending: false }).order("views", { ascending: false })
       : query.order("created_at", { ascending: false });
 
-  const { data, error } = await query.limit(limit);
+  const { data, error } = await query.range(offset, offset + limit - 1);
   if (error) throw error;
   return (data ?? []) as Prompt[];
 }
+
 
 export async function getPromptBySlug(slug: string): Promise<Prompt | null> {
   const { data, error } = await supabase
