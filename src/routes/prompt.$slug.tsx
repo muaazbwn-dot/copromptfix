@@ -4,6 +4,8 @@ import { Copy, Eye, Tag } from "lucide-react";
 import { useEffect } from "react";
 
 import { PromptViewAd } from "@/components/site/PromptViewAd";
+import { RewardedUnlock } from "@/components/site/RewardedUnlock";
+
 import { CopyPromptButton } from "@/components/site/CopyPromptButton";
 import { PromptGrid } from "@/components/site/PromptCard";
 import {
