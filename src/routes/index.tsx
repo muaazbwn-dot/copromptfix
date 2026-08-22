@@ -4,8 +4,11 @@ import { Flame, Search, Sparkles, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { AdSlot } from "@/components/site/AdSlot";
+import { FeaturedVideos } from "@/components/site/FeaturedVideos";
+import { MasonryFeed } from "@/components/site/MasonryFeed";
 import { PromptGrid } from "@/components/site/PromptCard";
 import { CATEGORIES, categorySlug, listPrompts } from "@/lib/promptify";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
