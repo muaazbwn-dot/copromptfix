@@ -17,48 +17,57 @@ export type Database = {
       prompts: {
         Row: {
           category: string
+          content_type: string
           copies: number
           created_at: string
           creator: string | null
           featured: boolean
           id: string
           image_url: string
+          media_url: string | null
           prompt_text: string
           slug: string
           status: string
           tags: string[]
+          thumbnail_url: string | null
           title: string
           updated_at: string
           views: number
         }
         Insert: {
           category: string
+          content_type?: string
           copies?: number
           created_at?: string
           creator?: string | null
           featured?: boolean
           id?: string
           image_url: string
+          media_url?: string | null
           prompt_text: string
           slug: string
           status?: string
           tags?: string[]
+          thumbnail_url?: string | null
           title: string
           updated_at?: string
           views?: number
         }
         Update: {
           category?: string
+          content_type?: string
           copies?: number
           created_at?: string
           creator?: string | null
           featured?: boolean
           id?: string
           image_url?: string
+          media_url?: string | null
           prompt_text?: string
           slug?: string
           status?: string
           tags?: string[]
+          thumbnail_url?: string | null
           title?: string
           updated_at?: string
           views?: number
