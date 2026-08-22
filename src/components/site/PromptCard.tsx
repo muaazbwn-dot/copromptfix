@@ -5,41 +5,37 @@ import { formatCount, type Prompt } from "@/lib/promptify";
 
 export function PromptCard({ prompt, priority = false }: { prompt: Prompt; priority?: boolean }) {
   return (
-    <article className="group mb-5 break-inside-avoid overflow-hidden rounded-2xl surface-card transition-transform duration-300 hover:-translate-y-1">
+    <article className="group mb-3 break-inside-avoid overflow-hidden rounded-2xl bg-secondary/40 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:mb-4">
       <Link
         to="/prompt/$slug"
         params={{ slug: prompt.slug }}
-        className="block"
+        className="relative block"
         aria-label={`View prompt: ${prompt.title}`}
       >
-        <div className="relative overflow-hidden">
-          <img
-            src={prompt.image_url}
-            alt={prompt.title}
-            loading={priority ? "eager" : "lazy"}
-            decoding="async"
-            className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-          />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        </div>
-        <div className="space-y-3 p-4">
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="line-clamp-2 text-sm font-semibold leading-snug">{prompt.title}</h3>
-            <span className="shrink-0 rounded-full bg-secondary px-2.5 py-1 text-[11px] text-muted-foreground">
+        <img
+          src={prompt.image_url}
+          alt={prompt.title}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
+          decoding="async"
+          className="w-full rounded-2xl object-cover transition-transform duration-500 group-hover:scale-[1.03] group-active:scale-[0.99]"
+        />
+
+        {/* Overlay: desktop hover reveal, always-legible bottom strip on touch */}
+        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-t from-background/90 via-background/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 p-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+          <h3 className="line-clamp-2 text-xs font-semibold leading-snug sm:text-sm">
+            {prompt.title}
+          </h3>
+          <div className="mt-1.5 flex items-center gap-3 text-[11px] text-muted-foreground">
+            <span className="inline-flex items-center gap-1">
+              <Eye className="size-3" /> {formatCount(prompt.views)}
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <Copy className="size-3" /> {formatCount(prompt.copies)}
+            </span>
+            <span className="ml-auto rounded-full bg-background/70 px-2 py-0.5">
               {prompt.category}
-            </span>
-          </div>
-          <div className="flex items-center justify-between gap-3">
-            <span className="flex items-center gap-3 text-[11px] text-muted-foreground">
-              <span className="inline-flex items-center gap-1">
-                <Eye className="size-3.5" /> {formatCount(prompt.views)}
-              </span>
-              <span className="inline-flex items-center gap-1">
-                <Copy className="size-3.5" /> {formatCount(prompt.copies)}
-              </span>
-            </span>
-            <span className="rounded-full border border-primary/40 px-3 py-1.5 text-xs font-medium text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-              View Prompt
             </span>
           </div>
         </div>
@@ -48,6 +44,7 @@ export function PromptCard({ prompt, priority = false }: { prompt: Prompt; prior
   );
 }
 
+/** Responsive masonry: 2 columns on mobile, more as the viewport grows. */
 export function PromptGrid({ prompts }: { prompts: Prompt[] }) {
   if (prompts.length === 0) {
     return (
@@ -57,7 +54,7 @@ export function PromptGrid({ prompts }: { prompts: Prompt[] }) {
     );
   }
   return (
-    <div className="columns-1 gap-5 sm:columns-2 lg:columns-3 xl:columns-4">
+    <div className="columns-2 gap-3 sm:columns-2 sm:gap-4 md:columns-3 xl:columns-4 2xl:columns-5">
       {prompts.map((prompt, index) => (
         <PromptCard key={prompt.id} prompt={prompt} priority={index < 4} />
       ))}

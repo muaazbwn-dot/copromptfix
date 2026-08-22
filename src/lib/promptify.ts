@@ -63,10 +63,11 @@ export type ListOptions = {
   category?: string | undefined;
   sort?: "latest" | "trending" | "featured" | undefined;
   limit?: number | undefined;
+  offset?: number | undefined;
 };
 
 export async function listPrompts(options: ListOptions = {}): Promise<Prompt[]> {
-  const { search, category, sort = "latest", limit = 60 } = options;
+  const { search, category, sort = "latest", limit = 60, offset = 0 } = options;
   let query = supabase.from("prompts").select(SELECT).eq("status", "approved");
 
   if (category) query = query.eq("category", category);
@@ -84,10 +85,11 @@ export async function listPrompts(options: ListOptions = {}): Promise<Prompt[]> 
       ? query.order("copies", { ascending: false }).order("views", { ascending: false })
       : query.order("created_at", { ascending: false });
 
-  const { data, error } = await query.limit(limit);
+  const { data, error } = await query.range(offset, offset + limit - 1);
   if (error) throw error;
   return (data ?? []) as Prompt[];
 }
+
 
 export async function getPromptBySlug(slug: string): Promise<Prompt | null> {
   const { data, error } = await supabase
@@ -100,17 +102,45 @@ export async function getPromptBySlug(slug: string): Promise<Prompt | null> {
   return (data as Prompt | null) ?? null;
 }
 
-export async function getRelatedPrompts(prompt: Prompt): Promise<Prompt[]> {
-  const { data } = await supabase
+/** Similar prompts: same category first, then overlapping tags, ranked by relevance. */
+export async function getRelatedPrompts(prompt: Prompt, limit = 12): Promise<Prompt[]> {
+  const byCategory = supabase
     .from("prompts")
     .select(SELECT)
     .eq("status", "approved")
     .eq("category", prompt.category)
     .neq("id", prompt.id)
     .order("views", { ascending: false })
-    .limit(6);
-  return (data ?? []) as Prompt[];
+    .limit(limit);
+
+  const byTags =
+    prompt.tags.length > 0
+      ? supabase
+          .from("prompts")
+          .select(SELECT)
+          .eq("status", "approved")
+          .neq("id", prompt.id)
+          .overlaps("tags", prompt.tags)
+          .order("views", { ascending: false })
+          .limit(limit)
+      : null;
+
+  const [categoryResult, tagResult] = await Promise.all([byCategory, byTags]);
+  const pool = [
+    ...((categoryResult.data ?? []) as Prompt[]),
+    ...((tagResult?.data ?? []) as Prompt[]),
+  ];
+
+  const unique = new Map<string, Prompt>();
+  for (const item of pool) if (!unique.has(item.id)) unique.set(item.id, item);
+
+  const score = (item: Prompt) =>
+    (item.category === prompt.category ? 2 : 0) +
+    item.tags.filter((tag) => prompt.tags.includes(tag)).length;
+
+  return [...unique.values()].sort((a, b) => score(b) - score(a) || b.views - a.views).slice(0, limit);
 }
+
 
 export async function trackMetric(slug: string, metric: "views" | "copies") {
   await supabase.rpc("increment_prompt_metric", { _slug: slug, _metric: metric });

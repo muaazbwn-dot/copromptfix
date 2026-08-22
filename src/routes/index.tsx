@@ -4,8 +4,11 @@ import { Flame, Search, Sparkles, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { AdSlot } from "@/components/site/AdSlot";
+import { FeaturedVideos } from "@/components/site/FeaturedVideos";
+import { MasonryFeed } from "@/components/site/MasonryFeed";
 import { PromptGrid } from "@/components/site/PromptCard";
 import { CATEGORIES, categorySlug, listPrompts } from "@/lib/promptify";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -186,8 +189,6 @@ function Home() {
           </section>
         ) : null}
 
-        <AdSlot />
-
         <section>
           <SectionHeading
             icon={<Flame className="size-5 text-primary" />}
@@ -197,17 +198,20 @@ function Home() {
           <PromptGrid prompts={data.trending} />
         </section>
 
+        <AdSlot placement="listing-footer" />
+
         <section>
           <SectionHeading
             icon={<Sparkles className="size-5 text-primary" />}
-            title="Latest Prompts"
-            subtitle="Freshly approved submissions from the community."
+            title="Explore Prompts"
+            subtitle="Endless gallery — scroll to load more."
           />
-          <PromptGrid prompts={data.latest} />
+          <MasonryFeed initialPrompts={data.latest} interleaveVideos={<FeaturedVideos />} />
         </section>
 
-        <AdSlot />
+        <AdSlot placement="listing-footer" />
       </div>
     </>
   );
 }
+

@@ -4,6 +4,8 @@ import { Copy, Eye, Tag } from "lucide-react";
 import { useEffect } from "react";
 
 import { PromptViewAd } from "@/components/site/PromptViewAd";
+import { RewardedUnlock } from "@/components/site/RewardedUnlock";
+
 import { CopyPromptButton } from "@/components/site/CopyPromptButton";
 import { PromptGrid } from "@/components/site/PromptCard";
 import {
@@ -128,18 +130,20 @@ function PromptDetail() {
             {data.creator ? <span>by {data.creator}</span> : null}
           </div>
 
-          <div className="mt-6 rounded-2xl surface-card p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Prompt
-            </p>
-            <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-foreground/90">
-              {data.prompt_text}
-            </p>
-          </div>
+          <RewardedUnlock>
+            <div className="mt-6 rounded-2xl surface-card p-5">
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Prompt
+              </p>
+              <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-foreground/90">
+                {data.prompt_text}
+              </p>
+            </div>
 
-          <div className="mt-5">
-            <CopyPromptButton text={data.prompt_text} slug={data.slug} />
-          </div>
+            <div className="mt-5">
+              <CopyPromptButton text={data.prompt_text} slug={data.slug} />
+            </div>
+          </RewardedUnlock>
 
           {data.tags.length > 0 ? (
             <div className="mt-6 flex flex-wrap gap-2">
@@ -162,10 +166,11 @@ function PromptDetail() {
 
       {related.length > 0 ? (
         <section className="mt-16">
-          <h2 className="mb-5 font-display text-xl font-semibold">More like this</h2>
+          <h2 className="mb-5 font-display text-xl font-semibold">You May Also Like</h2>
           <PromptGrid prompts={related} />
         </section>
       ) : null}
+
     </div>
   );
 }
