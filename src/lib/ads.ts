@@ -36,9 +36,45 @@ export const ADS_CONFIG: AdsConfig = {
   promptViewInterval: 4,
 };
 
+/**
+ * Rewarded-video unlock configuration.
+ *
+ * Disabled until a real, policy-compliant rewarded-ad product is wired up.
+ * While disabled, prompts are never locked and no ad code runs.
+ */
+export const REWARDED_CONFIG: {
+  enabled: boolean;
+  /** Rewarded ad unit id from the chosen provider. */
+  unitId: string;
+} = {
+  enabled: false,
+  unitId: "",
+};
+
+export function rewardedReady(): boolean {
+  return REWARDED_CONFIG.enabled && REWARDED_CONFIG.unitId.length > 0;
+}
+
+/**
+ * Requests a user-initiated rewarded ad and resolves true only when the real
+ * SDK reports a completed view. No simulation, no autoplay: while no provider
+ * is configured this always resolves false and the caller keeps content open.
+ */
+export async function requestRewardedAd(): Promise<boolean> {
+  if (!rewardedReady()) return false;
+  // Insert the official rewarded-ad SDK call here once configured, e.g.
+  //   return new Promise((resolve) => provider.show(REWARDED_CONFIG.unitId, {
+  //     beforeReward: (show) => show(),
+  //     adViewed: () => resolve(true),
+  //     adDismissed: () => resolve(false),
+  //   }));
+  return false;
+}
+
 export function adsReady(): boolean {
   return ADS_CONFIG.enabled && ADS_CONFIG.publisherId.length > 0;
 }
+
 
 const STORAGE_KEY = "promptify.prompt-view-count";
 
