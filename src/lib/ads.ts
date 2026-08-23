@@ -76,7 +76,7 @@ export function adsReady(): boolean {
 }
 
 
-const STORAGE_KEY = "promptify.prompt-view-count";
+const STORAGE_KEY = "promptHell.prompt-view-count";
 
 /** Records a prompt view and returns the running view count for this session. */
 export function recordPromptView(slug: string): number {
