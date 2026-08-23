@@ -34,7 +34,7 @@ Create a large hero section with a slideshow/carousel of beautiful AI-generated 
 
 The images should automatically change every few seconds with smooth transitions.
 
-Place the Promptify title and tagline over the hero section.
+Place the PromptHell title and tagline over the hero section.
 
 Add a prominent search bar:
 
