@@ -1,10 +1,10 @@
 # Promptify Gallery
 
-Create a professional, aesthetic website called Promptify.
+Create a professional, aesthetic website called PromptHell.
 
 Concept
 
-Promptify is a website where people can discover AI image prompts by browsing example images.
+PromptHell is a website where people can discover AI image prompts by browsing example images.
 
 The website does NOT generate or edit images.
 
