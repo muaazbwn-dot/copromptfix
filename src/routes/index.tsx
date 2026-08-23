@@ -13,13 +13,13 @@ import { CATEGORIES, categorySlug, listPrompts } from "@/lib/promptify";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Promptify — Discover, Copy, Create AI Image Prompts" },
+      { title: "PromptHell — Discover, Copy, Create AI Image Prompts" },
       {
         name: "description",
         content:
           "Browse a curated gallery of AI-generated images and copy the exact prompt behind each one. Free prompt library, no login required.",
       },
-      { property: "og:title", content: "Promptify — Discover, Copy, Create AI Image Prompts" },
+      { property: "og:title", content: "PromptHell — Discover, Copy, Create AI Image Prompts" },
       {
         property: "og:description",
         content: "Browse a curated gallery of AI-generated images and copy the exact prompt behind each one. Free prompt library, no login required.",
@@ -82,7 +82,7 @@ function Hero() {
           AI Prompt Library
         </p>
         <h1 className="animate-fade-up mt-4 text-5xl font-bold leading-[1.05] sm:text-7xl">
-          <span className="text-gradient-brand">Promptify</span>
+          <span className="text-gradient-brand">PromptHell</span>
         </h1>
         <p className="animate-fade-up mt-4 text-lg text-foreground/80 sm:text-xl">
           Discover. Copy. Create.
