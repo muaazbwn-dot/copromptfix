@@ -28,8 +28,8 @@ function Contact() {
       <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
         <p>
           Questions, feedback, advertising enquiries or takedown requests — email us at{" "}
-          <a href="mailto:hello@promptify.app" className="text-primary hover:underline">
-            hello@promptify.app
+          <a href="mailto: muaazbwn@gmail.com" className="text-primary hover:underline">
+            muaazbwn@gmail.com
           </a>
           .
         </p>
