@@ -43,7 +43,7 @@ function Privacy() {
           served by third-party ad networks which can set their own cookies, subject to their own
           privacy policies.
         </p>
-        <p>Questions? Email hello@promptify.app.</p>
+        <p>Questions? Email muaazbwn@gmail.com.</p>
       </div>
     </div>
   );
