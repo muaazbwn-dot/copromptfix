@@ -181,8 +181,7 @@ function About() {
     <strong>Last updated:</strong> August 27, 2026
   </p>
 
-</section>
-      </div>
+       </div>
       <Link
         to="/explore"
         className="mt-8 inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
