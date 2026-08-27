@@ -27,17 +27,28 @@ function About() {
       <h1 className="font-display text-3xl font-semibold">About Promptify</h1>
       <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
         <p>
-          Promptify is a free library of AI image prompts. Every image you see here is paired
-          with the exact prompt that produced it, so you can copy it, tweak it and use it in the
-          image generator of your choice.
-        </p>
-        <p>
-          We don't generate or edit images. Promptify is purely a discovery experience: browse,
-          click, read the prompt, copy it.
-        </p>
-        <p>
-          Everything is community-submitted and reviewed by a moderator before publishing, so the
-          gallery stays high quality and safe for work.
+       About Promptify
+Promptify is a free online library designed to help people discover, explore, and use AI image prompts.
+Our goal is simple: make high-quality AI image prompts easier to discover and easier to understand. Visitors can browse visual examples, view the prompts associated with them, copy prompts, and adapt them for use with the AI image-generation tools of their choice.
+What We Do
+Promptify focuses on prompt discovery and organization. We do not operate as an AI image-generation service. Instead, we provide a place where users can discover creative prompt ideas and experiment with them using their preferred AI tools.
+Our content may include:
+AI image prompts
+Visual examples
+Prompt categories and tags
+Creative prompt ideas
+Community-submitted content
+Information intended to help users understand and adapt prompts
+Community Contributions
+Some content on Promptify may be submitted by users or members of our community.
+Submitted content may be reviewed before publication to help maintain the quality and safety of the website. We may reject, edit, restrict, or remove content that violates our policies, applicable laws, or the rights of others.
+Content and Copyright
+Promptify respects intellectual-property rights. We do not claim ownership of images simply because they appear on our website.
+If you believe that an image, prompt, or other material on Promptify infringes your copyright or other rights, please contact us with sufficient information for us to identify and review the material.
+Our Mission
+We want Promptify to be a useful and easy-to-navigate resource for creators, designers, AI enthusiasts, and anyone interested in experimenting with AI image prompts.
+For questions, feedback, copyright concerns, or other inquiries, please visit our Contact page.
+Last updated: August 27, 2026
         </p>
       </div>
       <Link
