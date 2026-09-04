@@ -3,7 +3,9 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Flame, Search, Sparkles, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import logo from "@/assets/prompthell-logo-dark.png.asset.json";
 import { AdSlot } from "@/components/site/AdSlot";
+
 import { FeaturedVideos } from "@/components/site/FeaturedVideos";
 import { MasonryFeed } from "@/components/site/MasonryFeed";
 import { PromptGrid } from "@/components/site/PromptCard";
