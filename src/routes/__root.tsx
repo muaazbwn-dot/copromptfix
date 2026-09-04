@@ -99,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -136,7 +136,8 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8851607227596455"
-     crossorigin="anonymous"></script>
+     crossOrigin="anonymous"></script>
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XG02BM5VEP"></script>
   <script
     dangerouslySetInnerHTML={{

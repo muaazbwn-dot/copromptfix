@@ -3,7 +3,9 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Flame, Search, Sparkles, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import logo from "@/assets/prompthell-logo-dark.png.asset.json";
 import { AdSlot } from "@/components/site/AdSlot";
+
 import { FeaturedVideos } from "@/components/site/FeaturedVideos";
 import { MasonryFeed } from "@/components/site/MasonryFeed";
 import { PromptGrid } from "@/components/site/PromptCard";
@@ -81,12 +83,15 @@ function Hero() {
         <p className="animate-fade-up text-xs uppercase tracking-[0.35em] text-primary">
           AI Prompt Library
         </p>
-        <h1 className="animate-fade-up mt-4 text-5xl font-bold leading-[1.05] sm:text-7xl">
-          <span className="text-gradient-brand">PromptHell</span>
+        <h1 className="animate-fade-up mt-4 flex justify-center">
+          <span className="sr-only">PromptHell</span>
+          <img
+            src={logo.url}
+            alt="PromptHell — Discover Copy Create"
+            className="h-24 w-auto max-w-full sm:h-32"
+          />
         </h1>
-        <p className="animate-fade-up mt-4 text-lg text-foreground/80 sm:text-xl">
-          Discover. Copy. Create.
-        </p>
+
 
         <form
           onSubmit={(event) => {
