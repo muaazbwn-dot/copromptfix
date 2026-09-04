@@ -135,8 +135,11 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8851607227596455"
-     crossorigin="anonymous"></script>
+<script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8851607227596455"
+          crossOrigin="anonymous"
+        />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XG02BM5VEP"></script>
   <script
     dangerouslySetInnerHTML={{

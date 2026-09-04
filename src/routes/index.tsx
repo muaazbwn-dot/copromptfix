@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 import logo from "@/assets/prompthell-logo-dark.png.asset.json";
 import { AdSlot } from "@/components/site/AdSlot";
-
 import { FeaturedVideos } from "@/components/site/FeaturedVideos";
 import { MasonryFeed } from "@/components/site/MasonryFeed";
 import { PromptGrid } from "@/components/site/PromptCard";
@@ -84,14 +83,13 @@ function Hero() {
           AI Prompt Library
         </p>
         <h1 className="animate-fade-up mt-4 flex justify-center">
-          <span className="sr-only">PromptHell</span>
+          <span className="sr-only">PromptHell — Discover. Copy. Create.</span>
           <img
             src={logo.url}
             alt="PromptHell — Discover Copy Create"
-            className="h-24 w-auto max-w-full sm:h-32"
+            className="h-20 w-auto max-w-full sm:h-28"
           />
         </h1>
-
 
         <form
           onSubmit={(event) => {

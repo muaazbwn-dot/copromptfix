@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import logo from "@/assets/prompthell-logo-dark.png.asset.json";
 
-
 const NAV = [
   { to: "/explore", label: "Explore" },
   { to: "/categories", label: "Categories" },
@@ -28,7 +27,6 @@ export function SiteHeader() {
         <Link to="/" className="flex items-center" aria-label="PromptHell home">
           <img src={logo.url} alt="PromptHell — Discover Copy Create" className="h-9 w-auto" />
         </Link>
-
 
         <nav className="ml-6 hidden items-center gap-1 md:flex">
           {NAV.map((item) => (
