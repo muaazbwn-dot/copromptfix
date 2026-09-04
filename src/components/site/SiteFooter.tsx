@@ -1,12 +1,14 @@
 import { Link } from "@tanstack/react-router";
 
+import logo from "@/assets/prompthell-logo-dark.png.asset.json";
+
 
 export function SiteFooter() {
   return (
     <footer className="mt-24 border-t border-border/70 bg-surface">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div>
-          <span className="text-lg font-semibold tracking-tight"><span className="text-primary">Prompt</span>Hell</span>
+          <img src={logo.url} alt="PromptHell" className="h-8 w-auto" />
           <p className="mt-2 max-w-xs text-sm text-muted-foreground">
             A free library of AI image prompts. Browse the image, copy the prompt, create
             something of your own.

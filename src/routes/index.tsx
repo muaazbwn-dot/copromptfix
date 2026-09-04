@@ -3,6 +3,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Flame, Search, Sparkles, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import logo from "@/assets/prompthell-logo-dark.png.asset.json";
 import { AdSlot } from "@/components/site/AdSlot";
 
 import { FeaturedVideos } from "@/components/site/FeaturedVideos";
@@ -82,7 +83,14 @@ function Hero() {
         <p className="animate-fade-up text-xs uppercase tracking-[0.35em] text-primary">
           AI Prompt Library
         </p>
-        <h1 className="animate-fade-up mt-4 text-4xl font-semibold tracking-tight sm:text-6xl"><span className="text-primary">Prompt</span>Hell</h1>
+        <h1 className="animate-fade-up mt-4 flex justify-center">
+          <span className="sr-only">PromptHell</span>
+          <img
+            src={logo.url}
+            alt="PromptHell — Discover Copy Create"
+            className="h-24 w-auto max-w-full sm:h-32"
+          />
+        </h1>
 
 
         <form
