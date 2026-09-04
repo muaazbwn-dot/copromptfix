@@ -2,6 +2,9 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { Menu, Plus, Search, X } from "lucide-react";
 import { useState } from "react";
 
+import logo from "@/assets/prompthell-logo-dark.png.asset.json";
+
+
 const NAV = [
   { to: "/explore", label: "Explore" },
   { to: "/categories", label: "Categories" },
