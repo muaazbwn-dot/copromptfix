@@ -143,10 +143,16 @@ function Explore() {
       {isLoading ? (
         <p className="py-16 text-center text-sm text-muted-foreground">Loading prompts…</p>
       ) : (
-        <PromptGrid prompts={prompts} />
+        <>
+          <PromptGrid prompts={prompts.slice(0, 16)} />
+          {prompts.length > 16 ? <NativeAd /> : null}
+          {prompts.length > 16 ? <PromptGrid prompts={prompts.slice(16)} /> : null}
+          <NativeAd />
+        </>
       )}
 
       <AdSlot className="mt-12" />
+
     </div>
   );
 }
