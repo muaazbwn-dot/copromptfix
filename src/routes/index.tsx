@@ -201,6 +201,8 @@ function Home() {
           <PromptGrid prompts={data.trending} />
         </section>
 
+        <NativeAd />
+
         <AdSlot placement="listing-footer" />
 
         <section>
@@ -211,6 +213,8 @@ function Home() {
           />
           <MasonryFeed initialPrompts={data.latest} interleaveVideos={<FeaturedVideos />} />
         </section>
+
+        <NativeAd />
 
         <AdSlot placement="listing-footer" />
       </div>
