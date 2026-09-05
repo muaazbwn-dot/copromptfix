@@ -2,6 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
 import { AdSlot } from "@/components/site/AdSlot";
+import { NativeAd } from "@/components/site/NativeAd";
 import { PromptGrid } from "@/components/site/PromptCard";
 import { listPrompts, type Prompt } from "@/lib/promptify";
 
