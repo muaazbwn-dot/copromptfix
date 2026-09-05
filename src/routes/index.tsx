@@ -7,6 +7,7 @@ import logo from "@/assets/prompthell-logo-dark.png.asset.json";
 import { AdSlot } from "@/components/site/AdSlot";
 import { FeaturedVideos } from "@/components/site/FeaturedVideos";
 import { MasonryFeed } from "@/components/site/MasonryFeed";
+import { NativeAd } from "@/components/site/NativeAd";
 import { PromptGrid } from "@/components/site/PromptCard";
 import { CATEGORIES, categorySlug, listPrompts } from "@/lib/promptify";
 
@@ -201,6 +202,8 @@ function Home() {
           <PromptGrid prompts={data.trending} />
         </section>
 
+        <NativeAd />
+
         <AdSlot placement="listing-footer" />
 
         <section>
@@ -211,6 +214,8 @@ function Home() {
           />
           <MasonryFeed initialPrompts={data.latest} interleaveVideos={<FeaturedVideos />} />
         </section>
+
+        <NativeAd />
 
         <AdSlot placement="listing-footer" />
       </div>

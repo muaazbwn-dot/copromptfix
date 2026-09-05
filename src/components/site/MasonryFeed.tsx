@@ -2,6 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
 import { AdSlot } from "@/components/site/AdSlot";
+import { NativeAd } from "@/components/site/NativeAd";
 import { PromptGrid } from "@/components/site/PromptCard";
 import { listPrompts, type Prompt } from "@/lib/promptify";
 
@@ -54,6 +55,7 @@ export function MasonryFeed({
         <div key={index} className="space-y-12">
           <PromptGrid prompts={page} />
           {interleaveVideos && index === 0 ? interleaveVideos : null}
+          <NativeAd />
           {index % 2 === 1 ? <AdSlot placement="in-feed" /> : null}
         </div>
       ))}
