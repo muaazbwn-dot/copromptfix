@@ -47,7 +47,12 @@ export function MasonryFeed({
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  const pages = data?.pages ?? [];
+  // De-duplicate across pages so a card never renders twice (duplicate keys would
+  // make React reorder/remount cards while images are still loading).
+  const seen = new Set<string>();
+  const pages = (data?.pages ?? []).map((page) =>
+    page.filter((item) => (seen.has(item.id) ? false : (seen.add(item.id), true))),
+  );
 
   return (
     <div className="space-y-12">
