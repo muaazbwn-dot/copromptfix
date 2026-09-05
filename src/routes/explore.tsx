@@ -4,7 +4,9 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 
 import { AdSlot } from "@/components/site/AdSlot";
+import { NativeAd } from "@/components/site/NativeAd";
 import { PromptGrid } from "@/components/site/PromptCard";
+
 import { CATEGORIES, categoryFromSlug, categorySlug, listPrompts } from "@/lib/promptify";
 
 type ExploreSearch = {
