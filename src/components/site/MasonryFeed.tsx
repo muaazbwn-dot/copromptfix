@@ -77,9 +77,6 @@ export function MasonryFeed({
       {isFetchingNextPage ? (
         <p className="text-center text-xs text-muted-foreground">Loading more prompts…</p>
       ) : null}
-
-      {/* Final ad, always below every Explore card. */}
-      {!hasNextPage && !isFetchingNextPage && items.length > 0 ? <NativeAd /> : null}
     </div>
   );
 }
