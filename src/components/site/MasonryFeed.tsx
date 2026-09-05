@@ -67,7 +67,7 @@ export function MasonryFeed({
         <div key={index} className="space-y-12">
           <PromptGrid prompts={chunk} />
           {interleaveVideos && index === 0 ? interleaveVideos : null}
-          {chunk.length === CHUNK ? <NativeAd /> : null}
+          <NativeAd />
           {index % 2 === 1 ? <AdSlot placement="in-feed" /> : null}
         </div>
       ))}
@@ -77,7 +77,10 @@ export function MasonryFeed({
       {isFetchingNextPage ? (
         <p className="text-center text-xs text-muted-foreground">Loading more prompts…</p>
       ) : null}
+
+      {!hasNextPage && items.length > 0 ? <NativeAd /> : null}
     </div>
   );
 }
+
 

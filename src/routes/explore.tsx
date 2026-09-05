@@ -4,7 +4,9 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 
 import { AdSlot } from "@/components/site/AdSlot";
+import { NativeAd } from "@/components/site/NativeAd";
 import { PromptGrid } from "@/components/site/PromptCard";
+
 import { CATEGORIES, categoryFromSlug, categorySlug, listPrompts } from "@/lib/promptify";
 
 type ExploreSearch = {
@@ -143,10 +145,16 @@ function Explore() {
       {isLoading ? (
         <p className="py-16 text-center text-sm text-muted-foreground">Loading prompts…</p>
       ) : (
-        <PromptGrid prompts={prompts} />
+        <>
+          <PromptGrid prompts={prompts.slice(0, 16)} />
+          {prompts.length > 16 ? <NativeAd /> : null}
+          {prompts.length > 16 ? <PromptGrid prompts={prompts.slice(16)} /> : null}
+          <NativeAd />
+        </>
       )}
 
       <AdSlot className="mt-12" />
+
     </div>
   );
 }
