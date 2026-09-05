@@ -54,6 +54,7 @@ export function MasonryFeed({
         <div key={index} className="space-y-12">
           <PromptGrid prompts={page} />
           {interleaveVideos && index === 0 ? interleaveVideos : null}
+          <NativeAd />
           {index % 2 === 1 ? <AdSlot placement="in-feed" /> : null}
         </div>
       ))}
