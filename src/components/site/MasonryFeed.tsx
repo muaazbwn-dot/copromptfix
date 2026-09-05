@@ -50,17 +50,24 @@ export function MasonryFeed({
   // De-duplicate across pages so a card never renders twice (duplicate keys would
   // make React reorder/remount cards while images are still loading).
   const seen = new Set<string>();
-  const pages = (data?.pages ?? []).map((page) =>
-    page.filter((item) => (seen.has(item.id) ? false : (seen.add(item.id), true))),
-  );
+  const items = (data?.pages ?? [])
+    .flat()
+    .filter((item) => (seen.has(item.id) ? false : (seen.add(item.id), true)));
+
+  // One ad after roughly every 7-8 rows of cards (2 columns on mobile → 16 cards).
+  const CHUNK = 16;
+  const chunks: Prompt[][] = [];
+  for (let index = 0; index < items.length; index += CHUNK) {
+    chunks.push(items.slice(index, index + CHUNK));
+  }
 
   return (
     <div className="space-y-12">
-      {pages.map((page, index) => (
+      {chunks.map((chunk, index) => (
         <div key={index} className="space-y-12">
-          <PromptGrid prompts={page} />
+          <PromptGrid prompts={chunk} />
           {interleaveVideos && index === 0 ? interleaveVideos : null}
-          <NativeAd />
+          {chunk.length === CHUNK ? <NativeAd /> : null}
           {index % 2 === 1 ? <AdSlot placement="in-feed" /> : null}
         </div>
       ))}
@@ -70,6 +77,10 @@ export function MasonryFeed({
       {isFetchingNextPage ? (
         <p className="text-center text-xs text-muted-foreground">Loading more prompts…</p>
       ) : null}
+
+      {/* Final ad, always below every Explore card. */}
+      {!hasNextPage && !isFetchingNextPage && items.length > 0 ? <NativeAd /> : null}
     </div>
   );
 }
+
