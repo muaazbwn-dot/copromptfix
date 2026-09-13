@@ -7,7 +7,7 @@ import { PromptViewAd } from "@/components/site/PromptViewAd";
 import { RewardedUnlock } from "@/components/site/RewardedUnlock";
 
 import { CopyPromptButton } from "@/components/site/CopyPromptButton";
-import { PromptGrid } from "@/components/site/PromptCard";
+import { PromptGrid, sizedImage } from "@/components/site/PromptCard";
 import {
   categorySlug,
   formatCount,
