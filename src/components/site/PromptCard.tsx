@@ -13,6 +13,12 @@ function ratioFor(id: string) {
   return RATIOS[hash % RATIOS.length];
 }
 
+/** Ask the image route for a card-sized variant instead of the full upload. */
+export function sizedImage(url: string, width: number) {
+  if (!url.startsWith("/api/public/image/")) return url;
+  return `${url}${url.includes("?") ? "&" : "?"}w=${width}`;
+}
+
 export function PromptCard({ prompt, priority = false }: { prompt: Prompt; priority?: boolean }) {
   const [loaded, setLoaded] = useState(false);
 
@@ -32,7 +38,13 @@ export function PromptCard({ prompt, priority = false }: { prompt: Prompt; prior
           />
         ) : null}
         <img
-          src={prompt.image_url}
+          src={sizedImage(prompt.image_url, 400)}
+          srcSet={
+            prompt.image_url.startsWith("/api/public/image/")
+              ? `${sizedImage(prompt.image_url, 200)} 200w, ${sizedImage(prompt.image_url, 320)} 320w, ${sizedImage(prompt.image_url, 400)} 400w, ${sizedImage(prompt.image_url, 600)} 600w`
+              : undefined
+          }
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 300px"
           alt={prompt.title}
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : "auto"}
@@ -43,6 +55,7 @@ export function PromptCard({ prompt, priority = false }: { prompt: Prompt; prior
             loaded ? "opacity-100" : "opacity-0"
           }`}
         />
+
 
 
         {/* Overlay: desktop hover reveal, always-legible bottom strip on touch */}

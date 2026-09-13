@@ -7,7 +7,7 @@ import { PromptViewAd } from "@/components/site/PromptViewAd";
 import { RewardedUnlock } from "@/components/site/RewardedUnlock";
 
 import { CopyPromptButton } from "@/components/site/CopyPromptButton";
-import { PromptGrid } from "@/components/site/PromptCard";
+import { PromptGrid, sizedImage } from "@/components/site/PromptCard";
 import {
   categorySlug,
   formatCount,
@@ -111,11 +111,18 @@ function PromptDetail() {
       <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
         <div className="overflow-hidden rounded-3xl surface-card">
           <img
-            src={data.image_url}
+            src={sizedImage(data.image_url, 900)}
+            srcSet={
+              data.image_url.startsWith("/api/public/image/")
+                ? `${sizedImage(data.image_url, 600)} 600w, ${sizedImage(data.image_url, 900)} 900w, ${sizedImage(data.image_url, 1200)} 1200w`
+                : undefined
+            }
+            sizes="(max-width: 1024px) 100vw, 700px"
             alt={data.title}
             className="w-full object-cover"
             decoding="async"
           />
+
         </div>
 
         <div>
