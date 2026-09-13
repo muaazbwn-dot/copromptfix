@@ -16,20 +16,29 @@ export const Route = createFileRoute("/api/public/image/$")({
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
         // Resized variant: served by the storage image transformer, which is
-        // dramatically smaller than the original upload.
+        // dramatically smaller than the original upload. The browser's Accept
+        // header is forwarded so modern clients get WebP instead of huge PNGs.
         if (width) {
-          const resized = await supabaseAdmin.storage
+          const signed = await supabaseAdmin.storage
             .from("prompt-images")
-            .download(path, { transform: { width, quality: 68, resize: "contain" } });
-          if (!resized.error && resized.data) {
-            return new Response(resized.data, {
-              headers: {
-                "content-type": resized.data.type || "image/jpeg",
-                "cache-control": "public, max-age=31536000, immutable",
-              },
+            .createSignedUrl(path, 60, {
+              transform: { width, quality: 68, resize: "contain" },
             });
+          if (signed.data?.signedUrl) {
+            const accept = request.headers.get("accept") ?? "image/webp,image/*";
+            const response = await fetch(signed.data.signedUrl, { headers: { accept } });
+            if (response.ok) {
+              return new Response(response.body, {
+                headers: {
+                  "content-type": response.headers.get("content-type") ?? "image/webp",
+                  "cache-control": "public, max-age=31536000, immutable",
+                  vary: "Accept",
+                },
+              });
+            }
           }
         }
+
 
         const { data, error } = await supabaseAdmin.storage.from("prompt-images").download(path);
 
